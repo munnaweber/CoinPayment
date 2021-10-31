@@ -7,7 +7,6 @@
         "munna/dot-env-editor": "^1.0"
     },
     "license": "MIT",
-    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Munna\\CoinPayment\\": "src/"
