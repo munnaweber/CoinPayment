@@ -3,7 +3,7 @@
     "description": "Cryptocurrency Payment Mehtod Provided By CoinPayment",
     "type": "library",
     "require": {
-        "php": "7.2",
+        "php": "^7.2",
         "munna/dot-env-editor": "^1.0"
     },
     "license": "MIT",
