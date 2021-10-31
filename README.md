@@ -34,7 +34,7 @@ Except this path `/coinpayment/ipn` into csrf proccess in `App\Http\Middleware\V
 . . .
 /**
   * The URIs that should be excluded from CSRF verification.
-  *
+  * This URL must be post url
   * @var array
   */
 protected $except = [
@@ -87,4 +87,47 @@ $basic = CoinPayment::basicInfo();
     "ipn_url": null
   }
 }
+```
+
+
+# CoinPayment Services As Methods
+```php
+
+use Munna\CoinPayment\CoinPayment;
+$mc = new CoinPayment();
+
+$envVariabl = $mc->checkEnv();
+$checkProperty = $mc->checkProperty();
+$checkSettings = $mc->checkSettings();
+$address = $mc->getAddress("BTC"); // paramater is your targeted coin name
+$txDetails = $mc->txnInfo("CPFJ5EA5DZI1KRY1KKX4CXHXQW");  // parameter is txn id
+$rates = $mc->rates(); // get rates
+$balances = $mc->balances(); // get balanace
+$txnLists = $mc->txnLists(); // get transactions lists
+$withdrawDetails = $mc->withdrawDetails("CWFJ007ZT8ZFEZFUWKIKA3WF6Q");  // parameter is withdraw id
+
+// withdraw amount
+$address = "mmGSjBhsqZBm68N1rJnM7MPTNx1KVkrMxT"; // your targeted address
+$data = [ 
+    'amount' => 0.5,
+    'currency' => "LTCT",
+    'address' => $address,
+    'auto_confirm' => 1,  // auto confirm is withour email confirmation, 0 for email confirmation
+];
+$withdraw = $mc->withdraw($data); // withdraw method
+
+// create tx fields are required
+$array = [
+    'amount' => 0.5,  // usd amount
+    'currency' => 'USD',
+    'currency2' => 'LTCT',
+    'buyer_email' => 'buyer@gmail.com',
+    'buyer_name' => 'Buyer name',
+];
+$txn = $mc->createTx($array);
+
+
+$withdrawList = $mc->withdrawList(); // withdrw lists
+$withdrawInfo = $mc->withdrawInfo('CWFJ64IBAPZ5OJXNH2ZZKRROVO');  // parameter is withdraw id
+
 ```
