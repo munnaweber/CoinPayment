@@ -27,23 +27,6 @@ COINPAYMENT_IPN_DEBUG_EMAIL=your_email
 COINPAYMENTS_API_FORMAT=json
 ```
 
-
-# IPN Route 
-Except this path `/coinpayment/ipn` into csrf proccess in `App\Http\Middleware\VerifyCsrfToken` 
-```php
-. . .
-/**
-  * The URIs that should be excluded from CSRF verification.
-  * This URL must be post url
-  * @var array
-  */
-protected $except = [
-    '/coinpayment/ipn' //your ipn route
-]; 
-. . .
-```
-
-
 # Getting Started
 You can use class instance or facade instance like.
 ```php
@@ -173,4 +156,74 @@ $txn = CoinPayment::createTx($array);
 $withdrawList = CoinPayment::withdrawList(); // withdrw lists
 $withdrawInfo = CoinPayment::withdrawInfo('CWFJ64IBAPZ5OJXNH2ZZKRROVO');  // parameter is withdraw id
 
+```
+
+
+
+
+# IPN Route & IPN webhook Management
+Except this path `/coinpayment/ipn` into csrf proccess in `App\Http\Middleware\VerifyCsrfToken` 
+```php
+. . .
+/**
+  * The URIs that should be excluded from CSRF verification.
+  * This URL must be post url
+  * @var array
+  */
+protected $except = [
+    '/coinpayment/ipn' //your ipn route
+]; 
+
+
+// in your web.php
+// its just an example
+$route->post('coinpayment/ipn', [IpnController::class, 'ipnWebHook']);
+
+// in IpnController.php controller or class
+public function ipnWebHook(Request $get){
+    
+    // $get instance should be return txn_id as transaction id
+    
+    $coinpayment = new CoinPayment();    
+    // by txn_id call the txn Information
+    $info = $coinpayment->txnInfo($get->txn_id);
+    // here is your txn information to check txn is confirmed or not
+    // here is the json format of txn info
+    // and manage txn by its status
+    // when status = 100 then txn is confirmed otherwise not confirmed
+}
+. . .
+```
+
+```json
+"error": "ok",
+"result": {
+  "time_created": 1635657533,
+  "time_expires": 1635661133,
+  "status": 100, // status code 100 means completed otherwise it will be 0
+  "status_text": "Complete", // status Complete means complete otherwise Waiting for buyer fund...
+  "type": "coins",
+  "coin": "LTCT",
+  "amount": 260000,
+  "amountf": "0.00260000",
+  "received": 260000,
+  "receivedf": "0.00260000",
+  "recv_confirms": 0,
+  "payment_address": "mmGSjBhsqZBm68N1rJnM7MPTNx1KVkrMxT",
+  "time_completed": 1635657662,
+  "sender_ip": "103.92.205.5",
+  "checkout": {
+    "currency": "USD",
+    "amount": 50000000,
+    "test": 0,
+    "item_number": "",
+    "item_name": "",
+    "details": [],
+    "invoice": "",
+    "custom": "",
+    "ipn_url": "",
+    "amountf": 0.5
+  },
+  "shipping": []
+},
 ```
