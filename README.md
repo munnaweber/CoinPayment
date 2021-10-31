@@ -227,3 +227,6 @@ public function ipnWebHook(Request $get){
   "shipping": []
 },
 ```
+
+# For more informations
+Please contact with munnaweber@gmail.com as Cryptocode developer or visits https://cryptocode.uk.com/
