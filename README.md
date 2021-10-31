@@ -131,3 +131,46 @@ $withdrawList = $mc->withdrawList(); // withdrw lists
 $withdrawInfo = $mc->withdrawInfo('CWFJ64IBAPZ5OJXNH2ZZKRROVO');  // parameter is withdraw id
 
 ```
+
+
+
+
+# CoinPayment Services As Methods By Facade Class
+```php
+
+use Munna\CoinPayment\Facade\CoinPayment;
+
+$envVariabl = CoinPayment::checkEnv();
+$checkProperty = CoinPayment::checkProperty();
+$checkSettings = CoinPayment::checkSettings();
+$address = CoinPayment::getAddress("BTC"); // paramater is your targeted coin name
+$txDetails = CoinPayment::txnInfo("CPFJ5EA5DZI1KRY1KKX4CXHXQW");  // parameter is txn id
+$rates = CoinPayment::rates(); // get rates
+$balances = CoinPayment::balances(); // get balanace
+$txnLists = CoinPayment::txnLists(); // get transactions lists
+$withdrawDetails = CoinPayment::withdrawDetails("CWFJ007ZT8ZFEZFUWKIKA3WF6Q");  // parameter is withdraw id
+
+// withdraw amount
+$address = "mmGSjBhsqZBm68N1rJnM7MPTNx1KVkrMxT"; // your targeted address
+$data = [ 
+    'amount' => 0.5,
+    'currency' => "LTCT",
+    'address' => $address,
+    'auto_confirm' => 1,  // auto confirm is withour email confirmation, 0 for email confirmation
+];
+$withdraw = CoinPayment::withdraw($data); // withdraw method
+
+// create tx fields are required
+$array = [
+    'amount' => 0.5,  // usd amount
+    'currency' => 'USD',
+    'currency2' => 'LTCT',
+    'buyer_email' => 'buyer@gmail.com',
+    'buyer_name' => 'Buyer name',
+];
+$txn = CoinPayment::createTx($array);
+
+$withdrawList = CoinPayment::withdrawList(); // withdrw lists
+$withdrawInfo = CoinPayment::withdrawInfo('CWFJ64IBAPZ5OJXNH2ZZKRROVO');  // parameter is withdraw id
+
+```
