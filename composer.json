@@ -1,0 +1,26 @@
+{
+    "name": "munna/coin-payment",
+    "description": "Cryptocurrency Payment Mehtod Provided By CoinPayment",
+    "type": "library",
+    "require": {
+        "php": "7.2",
+        "munna/dot-env-editor": "^1.0"
+    },
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Munna\\CoinPayment\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Munna\\CoinPayment\\CoinPaymentServiceProvider"
+            ],
+            "aliases": {
+                "CoinPayment": "Munna\\CoinPayment\\Facade\\CoinPayment"
+            }
+        }
+    }
+}
