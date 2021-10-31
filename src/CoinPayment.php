@@ -26,7 +26,7 @@ class CoinPayment {
     /**
      * @method constructor
      */
-    public function __construct($data){
+    public function __construct($data = []){
         $env = $this->required_env_data();
         $this->params = isset($data['params']) ? $data['params'] : true;
         $this->apiUrl = "https://www.coinpayments.net/api.php";
